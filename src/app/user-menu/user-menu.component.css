@@ -1,0 +1,115 @@
+button {
+    background-color: transparent;
+    outline: 0px;
+    border: 0;
+  }
+  
+  mat-icon {
+    color: #fff;
+  }
+  
+  .mat-sidenav {
+    width: 250px;
+    padding: 0;
+  }
+  
+  mat-icon {
+    color: black;
+  }
+  
+  .mat-sidenav-content {
+    background-color: #fff;
+  }
+  
+  .mat-sidenav-container {
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .mat-sidenav-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .content-container-background{
+    background: url('/assets/menu-background.jpg') center center/cover no-repeat;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  
+  table {
+    width: 80%;
+    margin-top: 20px;
+  }
+  
+  .mat-toolbar {
+    height: 120px;
+    background-color: #993399;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  
+  .mat-toolbar img {
+    height: 100px;
+    width: 100px;
+    margin-right: 16px;
+    object-fit: contain; /* Ensure the image fits within the container */
+  }
+  
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* Center text horizontally */
+  }
+  
+  .mat-toolbar span {
+    font-size: 45px;
+  }
+  
+  .mat-toolbar h4 {
+    font-size: 25px;
+    font-weight: 400;
+  }
+  
+  .custom-toolbar {
+    height: 120px; /* Set the height of the toolbar */
+    background-color: #993399;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensure space between button and title */
+    padding: 0 16px;
+  }
+  
+  .centered-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .mat-toolbar img {
+    height: 100px;
+    width: 100px;
+    margin-right: 16px;
+    object-fit: contain; /* Ensure the image fits within the container */
+  }
+  
+  span, h4 {
+    margin: 8px 0;
+    font-family: 'Oswald', sans-serif;
+  }
+  

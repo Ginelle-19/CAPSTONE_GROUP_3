@@ -1,0 +1,71 @@
+<!-- <p>equipment-crud works!</p> -->
+<div class="container" >
+    <div>
+            <h1>Consumables</h1>
+    
+    <form>
+        <div class="form-group">
+          <label>Consumable Name</label>
+          <input type="text" [(ngModel)]="ConsumableName" [ngModelOptions]="{standalone: true}" class="form-control" id="ConsumableName" placeholder="ConsumableName">
+        </div>
+    
+        <div class="form-group">
+          <label>Quantity </label>
+          <input type="text" [(ngModel)]="Quantity" [ngModelOptions]="{standalone: true}" class="form-control" id="Quantity" placeholder="Quantity">
+        </div>
+
+        <div class="form-group">
+          <label>Course: </label>
+          <select [(ngModel)]="CourseID" class="form-control" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let CourseItem of CourseArray"  [value]="CourseItem.CourseID">{{ CourseItem.CourseName }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+            <label>Expiration Date</label>
+            <input type="date" [(ngModel)]="ExpirationDate" [ngModelOptions]="{standalone: true}" [min]="minDate" class="form-control" id="ExpirationDate" placeholder="DD-MM-YYYY">
+          </div>
+
+        <button type="submit" class="btn btn-primary mt-4" (click)="save()" >Save</button>
+        <button type="button" class="btn btn-danger" (click)="register()">Add</button>
+        <div>
+          <select [(ngModel)]="SelectedCourseID" [ngModelOptions] = "{standalone: true}">
+            <option *ngFor="let course of CourseArray" [value]="course.CourseID">{{ course.CourseName }}</option>
+          </select>
+          <button (click)="filterConsumables()">FILTER</button>
+        </div>
+       
+      </form>
+    </div>
+    
+  
+    
+        <div >
+        <table>
+            <thead>
+             <h1 *ngIf="!isResultLoaded">Loading.................</h1>      
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Consumable Name</th>
+                <th scope="col">Quantity</th>   
+                <th>Status</th>
+                <th scope="col">Expiration Date</th>  
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ConsumableItem of ConsumableArray | paginate: { itemsPerPage: itemsPerPage, currentPage: p, totalItems: ConsumableArray.length }">
+                <td>{{ ConsumableItem.ConsumableID }}</td>
+                <td>{{ ConsumableItem.ConsumableName }}</td>
+                <td>{{ ConsumableItem.Quantity }}</td>
+                <td >{{getStatusClass(ConsumableItem.Quantity)}}</td>
+                <td>{{ ConsumableItem.ExpirationDate | date: 'yyyy-MM-dd'}}</td>
+                <td>
+                  <button type="button" class="btn btn-success" (click)="setUpdate(ConsumableItem)">Edit</button>
+                  <button type="button" class="btn btn-danger" (click)="setDelete(ConsumableItem)">Delete</button>            
+                </td>
+              </tr>          
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+</div>

@@ -1,0 +1,48 @@
+
+<div class="container">
+    <div class="card">
+            <h1>Courses</h1>
+    
+    <form>
+        <div class="form-group">
+          <label>Course Code</label>
+          <input type="text" [(ngModel)]="CourseCode" [ngModelOptions]="{standalone: true}" class="form-control" id="CourseCode" placeholder="Enter Code">
+        </div>
+    
+        <div class="form-group">
+          <label>Course Name</label>
+          <input type="text" [(ngModel)]="CourseName" [ngModelOptions]="{standalone: true}" class="form-control" id="CourseName" placeholder="Enter Name">
+        </div>
+
+        <button type="submit"  (click)="save()" >Save</button>
+        <button type="button"  (click)="register()">Add</button>
+       
+      </form>
+    </div>
+    
+  
+    
+        <div>
+          <table>
+            <thead>
+             <h1 *ngIf="!isResultLoaded">Loading.................</h1>      
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Course Code</th>
+                <th scope="col">Course Name</th>   
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let CourseItem of CourseArray">
+                <td>{{ CourseItem.CourseID  }}</td>
+                <td>{{ CourseItem.CourseCode }}</td>
+                <td>{{ CourseItem.CourseName }}</td>
+                <td>
+                  <button type="button"  (click)="setUpdate(CourseItem)">Edit</button>
+                  <button type="button"  (click)="setDelete(CourseItem)">Delete</button>            
+                </td>
+              </tr>          
+            </tbody>
+          </table>
+        </div>
+</div>
