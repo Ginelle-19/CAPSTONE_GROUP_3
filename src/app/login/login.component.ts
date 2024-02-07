@@ -5,16 +5,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   imports: [
-    RouterModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   standalone: true,
 })
@@ -33,6 +31,12 @@ export class LoginComponent {
   ) {}
 
   ngOnInit() {
+    // Check if user is already logged in
+    if (this.authService.isAuthenticated()) {
+      this.redirectUser();
+    }
+
+    // Handle logout query parameter
     this.activeRoute.queryParamMap.subscribe((queries) => {
       const logout = Boolean(queries.get('logout'));
       if (logout) {
@@ -58,27 +62,36 @@ export class LoginComponent {
             alert('Your account has not been approved yet. Please contact the administrator.');
           } else {
             alert('Welcome ' + user.FirstName + '. You are logged in.');
-            switch (user.AccessLevelID) {
-              case 1: // Student
-                this.router.navigate(['/user-menu/user-courses']);
-                break;
-              case 2: // Super Admin
-                this.router.navigate(['/menu/courses']);
-                break;
-              default:
-                this.router.navigate(['']);
-                break;
-            }
+            this.redirectUser();
           }
         } else {
           alert('The login credentials you have entered are not correct.');
         }
       },
       (error) => {
-        // Handle other error cases
         console.error('Error during login:', error);
         alert('An error occurred during login.');
       }
     );
+  }
+
+  private redirectUser(): void {
+    // Redirect user based on their role or default page
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      switch (user.AccessLevelID) {
+        case 1: // Student
+          this.router.navigate(['/user-menu/user-courses']);
+          break;
+        case 2: // Super Admin
+          this.router.navigate(['/menu/courses']);
+          break;
+        default:
+          this.router.navigate(['']);
+          break;
+      }
+    } else {
+      this.snackbar.open('You are now logged out.', 'Close', {duration:3000});
+    }
   }
 }
