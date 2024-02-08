@@ -21,7 +21,8 @@ export class FacilityCrudComponent {
 
   RoomName: string = "";
   RoomDesc: string = "";
-  RoomStatus: string = "";
+  RoomStatus!: number;
+  RoomID! : '';
   currentRoom: any;
 
   constructor(private http: HttpClient) {
@@ -56,34 +57,46 @@ export class FacilityCrudComponent {
     this.RoomName = data.RoomName;
     this.RoomDesc = data.RoomDesc;
     this.RoomStatus = data.RoomStatus;
+    this.RoomID = data.RoomID;
   }
-  toggleActive(currentRoom: any) {
-    if (currentRoom && currentRoom.RoomStatus !== undefined) {
-      currentRoom.RoomStatus = currentRoom.RoomStatus === 1 ? 0 : 1;
-      this.UpdateRecords(currentRoom.RoomID);
-    } else {
-      console.error('currentRoom is undefined or does not have an RoomStatus property');
-    }
-  }
-  
-  UpdateRecords(currentRoom:any) {
+
+  UpdateRecords(data: any) {
     let bodyData = {
-      "RoomName": this.RoomName,
-      "RoomDesc": this.RoomDesc,
-      "RoomStatus": this.RoomStatus
+      "RoomName": data.RoomName,
+      "RoomDesc": data.RoomDesc,
+      "RoomStatus": data.RoomStatus,
+      "RoomID": data.RoomID
     };
+    
   
-    this.http.put("http://localhost:8085/api/room/update" + "/" + currentRoom.RoomID, bodyData)
+    this.http.put("http://localhost:8085/api/room/update" + "/" + data.RoomID, bodyData)
       .subscribe((resultData: any) => {
         console.log(resultData);
         alert("Room Updated Successfully!");
         this.getAllRooms();
       });
   }
+
+  toggleActive(data: any) {
+    if (data && data.RoomStatus !== undefined) {
+      data.RoomStatus = data.RoomStatus === 1 ? 0 : 1;
+      this.UpdateRecords(data);
+    } else {
+      console.error('currentRoom is undefined or does not have an RoomStatus property');
+    }
+  }
+
   
   save() {
-    if (this.currentRoom && this.currentRoom.RoomID !== '') {
-      this.UpdateRecords(this.currentRoom);
+    if (this.RoomID && this.RoomID !== '') {
+      // Construct an object with the necessary room data
+      const roomData = {
+        RoomName: this.RoomName,
+        RoomDesc: this.RoomDesc,
+        RoomStatus: this.RoomStatus,
+        RoomID: this.RoomID
+      };
+      this.UpdateRecords(roomData);
     } else {
       this.addRooms();
     }
